@@ -5,7 +5,7 @@ class Article extends Component{
        super(props)
 
        this.state = {
-           isOpen: props.defaultOpen
+
        }
    }
 
@@ -13,24 +13,26 @@ class Article extends Component{
        console.log('---','mounting')
    }
 
-   componentWillReceiveProps(nextProps) {
-       if (nextProps.defaultOpen !== this.props.defaultOpen) this.setState({
-           isOpen: nextProps.defaultOpen
-       })
-   }
+   // componentWillReceiveProps(nextProps) {
+   //     console.log('---','will receive props');
+   //     if (nextProps.defaultOpen !== this.props.defaultOpen) this.setState({
+   //         isOpen: nextProps.defaultOpen
+   //     })
+   // }
 
    componentWillUpdate(nextProps, nextState, nextContext) {
+       console.log('---','will update');
    }
 
     render() {
-        const {article} = this.props;
-        const body = this.state.isOpen && <section>{article.text}</section>
+        const {article, isOpen, onButtonClick} = this.props;
+        const body = isOpen && <section>{article.text}</section>
         return (
 
             <div className='hello' style={{color:'red'}}>
                 <h2>{article.title}
-                    <button onClick={this.handleClick}> {
-                        this.state.isOpen ? 'close':'open'
+                    <button onClick={onButtonClick}> {
+                        isOpen ? 'close':'open'
                     }</button>
                 </h2>
                 {body}
@@ -38,12 +40,7 @@ class Article extends Component{
             </div>
         )
     }
-    handleClick = () => {
-        console.log('---','clicked');
-        this.setState({
-            isOpen: !this.state.isOpen
-        })
-    }
+
 
 }
 
